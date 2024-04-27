@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block title %}Upload PDF{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>Upload PDF File</h2>
+    <form id="pdfUploadForm" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="file" class="form-label">Choose PDF file to upload:</label>
+            <input type="file" class="form-control" id="file" name="file" required accept=".pdf">
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
+<script>
+document.getElementById('pdfUploadForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    var formData = new FormData();
+    formData.append('file', document.getElementById('file').files[0]);
+
+    fetch('/api/upload_pdf/', {
+        method: 'POST',
+        body: formData,
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log('Success:', data);
+        alert('File uploaded successfully');
+    })
+    .catch((error) => {
+        console.error('Error:', error);
+        alert('Error uploading file');
+    });
+});
+</script>
+{% endblock %}

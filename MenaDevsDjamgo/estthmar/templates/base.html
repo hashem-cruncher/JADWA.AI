@@ -1,0 +1,128 @@
+{% load static %}
+<!-- templates/base.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10/dist/sweetalert2.min.css">
+    <!-- Bootstrap CSS via CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="{% static 'css/general.css' %}" rel="stylesheet">
+        <title>{% block title %}My Website{% endblock %}</title>
+    {% if userId is not none %}
+    <script>
+        var userId = '{{ userId }}';  // Note: Use single quotes to wrap the value
+    </script>
+    {% endif %}
+    
+</head>
+<body>
+    {% include 'navbar.html' %}
+    <main style="margin-top: 115px;">
+        {% block content %}{% endblock %}
+    </main>
+    {% include 'footer.html' %}
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
+    <!-- <script>
+        $(document).ready(function() {
+            $('#aiForm').on('submit', function(e) {
+                e.preventDefault(); // Prevent the normal form submission
+                var query = $('#userQuery').val();
+        
+                $.ajax({
+                    url: '/api/ai/', // Note the added trailing slash
+                    type: 'POST',
+                    data: JSON.stringify({query: query}),
+                    contentType: 'application/json; charset=utf-8',
+                    dataType: 'json',
+                    success: function(response) {
+                        $('#responseArea').html('<pre>' + JSON.stringify(response, null, 2) + '</pre>');
+                    },
+                    error: function(xhr, status, error) {
+                        console.log('Error: ' + error.message);
+                        $('#responseArea').html('An error occurred.');
+                    }
+                });
+            });
+        });
+        </script>
+        <script>
+    let currentQuestionIndex = 0;
+let answers = [];
+
+function fetchQuestions() {
+    // This is a placeholder for your fetch API call
+    // For example purposes, we simulate it with a local variable
+    let questions = [
+        {"text": "What is your favorite color?"},
+        {"text": "What is your hobby?"},
+        {"text": "What is your dream job?"}
+    ];
+    displayQuestion(questions);
+}
+
+function displayQuestion(questions) {
+    if (currentQuestionIndex < questions.length) {
+        let question = questions[currentQuestionIndex];
+        let container = document.getElementById('questionContainer');
+        container.innerHTML = `
+            <div>
+                <p>${question.text}</p>
+                <input type="text" id="answerInput" placeholder="Type your answer here">
+                <button onclick="saveAnswer(${question.id}, ${questions.length})">Next</button>
+            </div>
+        `;
+    } else {
+        displayAllQuestionsAndAnswers(questions);
+    }
+}
+
+function saveAnswer(questionId, totalQuestions) {
+    let answerInput = document.getElementById('answerInput').value;
+    answers.push({questionId: questionId, answer: answerInput});
+    currentQuestionIndex++;
+    if (currentQuestionIndex < totalQuestions) {
+        fetchQuestions();  // Fetch again to simulate getting next question
+    } else {
+        submitAnswers();
+    }
+}
+
+function displayAllQuestionsAndAnswers(questions) {
+    let container = document.getElementById('questionContainer');
+    container.innerHTML = questions.map((question, index) => `
+        <div>
+            <p>${question.text}</p>
+            <input type="text" value="${answers[index].answer}">
+            <button onclick="editAnswer(${question.id})">Edit</button>
+        </div>
+    `).join('');
+    container.innerHTML += '<button onclick="submitAnswers()">Submit All</button>';
+}
+
+function submitAnswers() {
+    fetch('/submit_answers', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(answers)
+    }).then(response => response.json())
+      .then(data => alert('Answers submitted!'));
+}
+
+// Initial call to fetch questions
+fetchQuestions();
+
+</script> -->
+        
+</body>
+</html>
